@@ -1,0 +1,10 @@
+spec:
+  template:
+    spec:
+      containers:
+        - name: vertx
+          resources:
+            limits:
+              memory: 500Mi
+            requests:
+              memory: 200Mi
