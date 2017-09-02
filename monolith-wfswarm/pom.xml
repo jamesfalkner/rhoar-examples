@@ -12,7 +12,7 @@
     <repositories>
         <repository>
             <id>jboss-maven-repository</id>
-            <name>JBoss Maven Repository</name>
+            <name>Red Hat Maven Repository</name>
             <url>http://maven.repository.redhat.com/ga/</url>
             <layout>default</layout>
             <releases>
@@ -41,8 +41,8 @@
     </repositories>
     <pluginRepositories>
         <pluginRepository>
-            <id>jboss-maven-repository</id>
-            <name>JBoss Maven Repository</name>
+            <id>redhat-maven-repository</id>
+            <name>Red Hat Maven Repository</name>
             <url>http://maven.repository.redhat.com/ga/</url>
             <layout>default</layout>
             <releases>
@@ -157,6 +157,9 @@
                 <groupId>org.wildfly.swarm</groupId>
                 <artifactId>wildfly-swarm-plugin</artifactId>
                 <version>${version.wildfly.swarm}</version>
+                <configuration>
+                    <fractionDetectMode>force</fractionDetectMode>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -217,7 +220,6 @@
             -->
 
             <!-- Java EE 7 BOM -->
-            <!--
             <dependency>
                 <groupId>org.jboss.bom</groupId>
                 <artifactId>jboss-eap-javaee7</artifactId>
@@ -225,7 +227,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            -->
 
         </dependencies>
     </dependencyManagement>
