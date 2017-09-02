@@ -18,6 +18,8 @@ public class ApiVerticle extends AbstractVerticle {
 
     private CatalogService catalogService;
 
+  //  private CircuitBreaker circuitBreaker;
+
     public ApiVerticle(CatalogService catalogService) {
         this.catalogService = catalogService;
     }
@@ -36,6 +38,14 @@ public class ApiVerticle extends AbstractVerticle {
         HealthCheckHandler healthCheckHandler = HealthCheckHandler.create(vertx)
                 .register("health", this::health);
         router.get("/health").handler(healthCheckHandler);
+
+//        circuitBreaker = CircuitBreaker.create("product-circuit-breaker", vertx,
+//                new CircuitBreakerOptions()
+//                        .setMaxFailures(3) // number of failure before opening the circuit
+//                        .setTimeout(1000) // consider a failure if the operation does not succeed in time
+//                        .setFallbackOnFailure(true) // do we call the fallback on failure
+//                        .setResetTimeout(5000) // time spent in open state before attempting to re-try
+//        );
 
         vertx.createHttpServer()
                 .requestHandler(router::accept)
