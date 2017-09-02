@@ -24,8 +24,6 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-const probe = require('kube-probe');
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -57,13 +55,15 @@ app.use('/api/killme', (request, response) => {
   return response.send('Stopping HTTP server, Bye bye world !');
 });
 
-const options = {
-  livenessCallback: (request, response) => {
-    console.log('livenessCallback called, we are " ' + (isOnline ? 'ONLINE' : 'OFFLINE'));
-    return isOnline ? response.send('OK') : response.sendStatus(500);
-  }
-};
+// const probe = require('kube-probe');
 
-probe(app, options);
+// const options = {
+//   livenessCallback: (request, response) => {
+//     console.log('livenessCallback called, we are " ' + (isOnline ? 'ONLINE' : 'OFFLINE'));
+//     return isOnline ? response.send('OK') : response.sendStatus(500);
+//   }
+// };
+//
+// probe(app, options);
 
 module.exports = app;

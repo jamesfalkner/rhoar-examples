@@ -19,21 +19,12 @@ public class CatalogController {
 	@Autowired
     private ProductRepository repository;
 
-	private StoreProperties storeProperties;
-
-	@Autowired
-	public CatalogController(StoreProperties props) {
-	    this.storeProperties = props;
-    }
-
     @ResponseBody
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Product> getAll() {
         Spliterator<Product> products = repository.findAll().spliterator();
-        List<String> recalledProducts = storeProperties.getRecalledProducts();
 
         return StreamSupport.stream(products, false)
-                .filter(product -> !recalledProducts.contains(product.getItemId()))
                 .collect(Collectors.toList());
     }
 }

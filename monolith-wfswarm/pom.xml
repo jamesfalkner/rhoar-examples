@@ -123,9 +123,9 @@
                 <version>1.1.0.Final</version>
             </plugin>
 
+            <!-- Fabric8 plugin -->
+            <!--
             <plugin>
-
-                <!-- Fabric8 plugin -->
                 <groupId>io.fabric8</groupId>
                 <artifactId>fabric8-maven-plugin</artifactId>
                 <version>${fabric8.maven.plugin.version}</version>
@@ -149,8 +149,10 @@
                     </generator>
                 </configuration>
             </plugin>
+            -->
 
             <!-- WildFly Swarm plugin -->
+            <!--
             <plugin>
                 <groupId>org.wildfly.swarm</groupId>
                 <artifactId>wildfly-swarm-plugin</artifactId>
@@ -163,7 +165,7 @@
                     </execution>
                 </executions>
             </plugin>
-
+            -->
 
         </plugins>
     </build>
@@ -204,6 +206,7 @@
             </dependency>
 
             <!-- Fabric8 BOM -->
+            <!--
             <dependency>
                 <groupId>io.fabric8</groupId>
                 <artifactId>fabric8-project-bom-with-platform-deps</artifactId>
@@ -211,8 +214,10 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            -->
 
             <!-- Java EE 7 BOM -->
+            <!--
             <dependency>
                 <groupId>org.jboss.bom</groupId>
                 <artifactId>jboss-eap-javaee7</artifactId>
@@ -220,6 +225,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            -->
 
         </dependencies>
     </dependencyManagement>
@@ -256,10 +262,12 @@
         </dependency>
 
         <!-- WildFly Swarm Health Check plugin -->
+        <!--
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>monitor</artifactId>
         </dependency>
+        -->
 
 
     </dependencies>
