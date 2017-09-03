@@ -19,6 +19,12 @@ public class Product implements Serializable {
 
     }
 
+    public Product(String itemId, String name, String desc, double price) {
+        this.itemId = itemId;
+        this.name = name;
+        this.desc = desc;
+        this.price = price;
+    }
     public Product(JsonObject json) {
         this.itemId = json.getString("itemId");
         this.name = json.getString("name");
