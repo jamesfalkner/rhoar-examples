@@ -12,7 +12,7 @@ import com.redhat.coolstoremsa.service.ProductService;
 
 import java.util.List;
 
-@Path("/catalog")
+@Path("/products")
 public class ProductEndpoint {
 
     @Inject
