@@ -8,5 +8,6 @@ spec:
       port: 5432
       targetPort: 5432
   selector:
+    app: catalog-database
     deploymentconfig: catalog-database
   type: LoadBalancer
