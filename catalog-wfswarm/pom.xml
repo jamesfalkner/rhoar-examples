@@ -22,13 +22,14 @@
   <version>1.0.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
-  <name>Catalog Microservice</name>
+  <name>Catalog Microservice - WF Swarm</name>
   <description>WildFly Swarm : REST - JDBC - Catalog Service</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
+    <project.encoding>UTF-8</project.encoding>
 
     <version.wildfly.swarm>2017.8.1</version.wildfly.swarm>
 
@@ -68,9 +69,10 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.0</version>
         <configuration>
+          <encoding>${project.encoding}</encoding>
           <source>1.8</source>
           <target>1.8</target>
         </configuration>
@@ -83,6 +85,7 @@
           <execution>
             <goals>
               <goal>resource</goal>
+              <goal>build</goal>
             </goals>
           </execution>
         </executions>

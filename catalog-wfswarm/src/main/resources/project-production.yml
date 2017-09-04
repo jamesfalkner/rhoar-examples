@@ -4,6 +4,6 @@ swarm:
     data-sources:
       ProductDS:
         driver-name: postgresql
-        connection-url: jdbc:postgresql://inventory-database:5432/inventory
+        connection-url: jdbc:postgresql://catalog-database:5432/catalog
         user-name: swarm
         password: password
