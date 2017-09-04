@@ -59,6 +59,16 @@
         <version>7.0</version>
         <scope>provided</scope>
       </dependency>
+
+
+        <dependency>
+          <groupId>org.jboss.arquillian</groupId>
+          <artifactId>arquillian-bom</artifactId>
+          <version>1.1.13.Final</version>
+          <type>pom</type>
+          <scope>import</scope>
+        </dependency>
+
     </dependencies>
 
     <!-- Add additional dependency management here -->
@@ -169,6 +179,17 @@
       <groupId>javax</groupId>
       <artifactId>javaee-api</artifactId>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.wildfly.swarm</groupId>
+      <artifactId>arquillian</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.arquillian.junit</groupId>
+      <artifactId>arquillian-junit-container</artifactId>
+      <scope>test</scope>
     </dependency>
 
   </dependencies>
