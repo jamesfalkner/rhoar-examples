@@ -6,7 +6,7 @@
   <groupId>com.redhat.cloudnative</groupId>
   <artifactId>catalog</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>CoolStore Catalog Service</name>
+  <name>Catalog Microservice - Spring</name>
   <description>CoolStore Catalog Service with Spring Boot</description>
   <properties>
     <spring-boot.version>1.4.1.RELEASE</spring-boot.version>
