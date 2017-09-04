@@ -18,9 +18,6 @@ import com.redhat.coolstore.model.*;
 @Stateless
 public class CatalogService {
 
-    @Inject
-    Logger log;
-
     @PersistenceContext
     private EntityManager em;
 

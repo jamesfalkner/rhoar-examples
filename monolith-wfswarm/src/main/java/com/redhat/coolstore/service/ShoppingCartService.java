@@ -14,9 +14,6 @@ import com.redhat.coolstore.model.*;
 public class ShoppingCartService {
 
     @Inject
-    Logger log;
-
-    @Inject
     ProductService productServices;
 
     @Inject
