@@ -11,6 +11,7 @@ import io.vertx.ext.healthchecks.Status;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
+import io.vertx.ext.web.handler.StaticHandler;
 
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class ApiVerticle extends AbstractVerticle {
         router.get("/product/:itemId").handler(this::getProduct);
         router.route("/product").handler(BodyHandler.create());
         router.post("/product").handler(this::addProduct);
+        router.route("/*").handler(StaticHandler.create());
 
         //Health Check
         HealthCheckHandler healthCheckHandler = HealthCheckHandler.create(vertx)
