@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  labels:
+    app: catalog
+data:
+  application.properties: |-
+    store.recalledProducts[0]=329199
+
+
