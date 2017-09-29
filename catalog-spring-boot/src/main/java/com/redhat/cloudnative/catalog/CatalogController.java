@@ -5,6 +5,7 @@ import java.util.Spliterator;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.apache.catalina.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -19,12 +20,18 @@ public class CatalogController {
 	@Autowired
     private ProductRepository repository;
 
+
+	@Autowired
+    private StoreConfiguration config;
+
     @ResponseBody
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Product> getAll() {
         Spliterator<Product> products = repository.findAll().spliterator();
 
         return StreamSupport.stream(products, false)
+                .filter(product ->
+                        !config.getRecalledProducts().contains(product.getItemId()))
                 .collect(Collectors.toList());
     }
 }

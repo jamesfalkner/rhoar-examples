@@ -2,6 +2,8 @@ package com.redhat.coolstore.catalog.api;
 
 import com.redhat.coolstore.catalog.model.Product;
 import com.redhat.coolstore.catalog.verticle.service.CatalogService;
+import io.vertx.circuitbreaker.CircuitBreaker;
+import io.vertx.circuitbreaker.CircuitBreakerOptions;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 import io.vertx.core.json.JsonArray;
@@ -19,7 +21,7 @@ public class ApiVerticle extends AbstractVerticle {
 
     private CatalogService catalogService;
 
-  //  private CircuitBreaker circuitBreaker;
+    private CircuitBreaker circuitBreaker;
 
     public ApiVerticle(CatalogService catalogService) {
         this.catalogService = catalogService;
@@ -41,13 +43,13 @@ public class ApiVerticle extends AbstractVerticle {
                 .register("health", this::health);
         router.get("/health").handler(healthCheckHandler);
 
-//        circuitBreaker = CircuitBreaker.create("product-circuit-breaker", vertx,
-//                new CircuitBreakerOptions()
-//                        .setMaxFailures(3) // number of failure before opening the circuit
-//                        .setTimeout(1000) // consider a failure if the operation does not succeed in time
-//                        .setFallbackOnFailure(true) // do we call the fallback on failure
-//                        .setResetTimeout(5000) // time spent in open state before attempting to re-try
-//        );
+        circuitBreaker = CircuitBreaker.create("product-circuit-breaker", vertx,
+                new CircuitBreakerOptions()
+                        .setMaxFailures(3) // number of failure before opening the circuit
+                        .setTimeout(1000) // consider a failure if the operation does not succeed in time
+                        .setFallbackOnFailure(true) // do we call the fallback on failure
+                        .setResetTimeout(5000) // time spent in open state before attempting to re-try
+        );
 
         vertx.createHttpServer()
                 .requestHandler(router::accept)
@@ -61,20 +63,23 @@ public class ApiVerticle extends AbstractVerticle {
     }
 
     private void getProducts(RoutingContext rc) {
-        catalogService.getProducts(ar -> {
-            if (ar.succeeded()) {
+
+        circuitBreaker.executeWithFallback(future ->
+            catalogService.getProducts(ar -> {
                 List<Product> products = ar.result();
                 JsonArray json = new JsonArray();
                 products.stream()
                         .map(Product::toJson)
                         .forEach(json::add);
-                rc.response()
-                        .putHeader("Content-type", "application/json")
-                        .end(json.encodePrettily());
-            } else {
-                rc.fail(ar.cause());
-            }
-        });
+                future.complete(json);
+            }),
+
+            fb -> new JsonArray().add(
+                    new Product("0", "fallback product", "fallback desc", 1000000).toJson()))
+            .setHandler(ar -> rc.response()
+                    .putHeader("Content-type", "application/json")
+                    .end(ar.result().encodePrettily()));
+
     }
 
 
