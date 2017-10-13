@@ -6,6 +6,6 @@ metadata:
     app: catalog
 data:
   application.properties: |-
-    #store.recalledProducts[0]=329299
+    store.recalledProducts[0]=
 
 
