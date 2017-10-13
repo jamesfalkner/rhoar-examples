@@ -20,9 +20,40 @@ public class Product implements Serializable {
 	
 	private double price;
 
+	private String location;
+
+	private int quantity;
+
+	private String link;
+
+
 	public Product() {
 	}
-	
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+
 	public String getItemId() {
 		return itemId;
 	}

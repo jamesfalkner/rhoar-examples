@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(value = "/api/catalog")
+@RequestMapping("/services")
 public class CatalogController {
 
 	@Autowired
     private ProductRepository repository;
 
     @ResponseBody
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path="/products", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Product> getAll() {
         Spliterator<Product> products = repository.findAll().spliterator();
 
