@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.redhat.coolstore</groupId>
     <artifactId>monolith</artifactId>
@@ -77,7 +78,6 @@
         <m2e.jpa.activation>false</m2e.jpa.activation>
         <m2e.jsf.activation>false</m2e.jsf.activation>
         <maven.test.skip>true</maven.test.skip>
-        <version.wildfly-swarm>2017.8.1</version.wildfly-swarm>
 
     </properties>
     <build>
@@ -111,34 +111,21 @@
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <version>1.1.0.Final</version>
             </plugin>
-      <plugin>
-        <groupId>io.fabric8</groupId>
-        <artifactId>fabric8-maven-plugin</artifactId>
-        <version>3.5.19</version>
-        <executions>
-          <execution>
-            <id>fmp</id>
-            <goals>
-              <goal>resource</goal>
-              <goal>helm</goal>
-              <goal>build</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.wildfly.swarm</groupId>
-        <artifactId>wildfly-swarm-plugin</artifactId>
-        <version>${version.wildfly-swarm}</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>package</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>fabric8-maven-plugin</artifactId>
+                <version>3.5.19</version>
+                <executions>
+                    <execution>
+                        <id>fmp</id>
+                        <goals>
+                            <goal>resource</goal>
+                            <goal>helm</goal>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <profiles>
@@ -176,14 +163,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-        <groupId>org.wildfly.swarm</groupId>
-        <artifactId>bom-all</artifactId>
-        <version>${version.wildfly-swarm}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-
         </dependencies>
     </dependencyManagement>
     <dependencies>
