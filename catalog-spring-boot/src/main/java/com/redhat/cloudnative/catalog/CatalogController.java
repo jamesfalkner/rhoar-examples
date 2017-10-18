@@ -5,7 +5,6 @@ import java.util.Spliterator;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import org.apache.catalina.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -14,24 +13,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(value = "/api/catalog")
+@RequestMapping("/services")
 public class CatalogController {
 
 	@Autowired
     private ProductRepository repository;
 
-
 	@Autowired
-    private StoreConfiguration config;
+    private StoreConfig config;
 
     @ResponseBody
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path="/products", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Product> getAll() {
         Spliterator<Product> products = repository.findAll().spliterator();
 
         return StreamSupport.stream(products, false)
-                .filter(product ->
-                        !config.getRecalledProducts().contains(product.getItemId()))
+                .filter(product -> !config.getRecalledProducts().contains(product.getItemId()))
                 .collect(Collectors.toList());
     }
 }

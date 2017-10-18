@@ -64,22 +64,25 @@ public class ApiVerticle extends AbstractVerticle {
 
     private void getProducts(RoutingContext rc) {
 
-        circuitBreaker.executeWithFallback(future ->
+
+
+        circuitBreaker.executeWithFallback(event -> {
             catalogService.getProducts(ar -> {
-                List<Product> products = ar.result();
-                JsonArray json = new JsonArray();
-                products.stream()
-                        .map(Product::toJson)
-                        .forEach(json::add);
-                future.complete(json);
-            }),
+                    List<Product> products = ar.result();
+                    JsonArray json = new JsonArray();
+                    products.stream()
+                            .map(Product::toJson)
+                            .forEach(json::add);
+                    event.complete(json);
+            });
 
-            fb -> new JsonArray().add(
-                    new Product("0", "fallback product", "fallback desc", 1000000).toJson()))
-            .setHandler(ar -> rc.response()
+        }, throwable -> new JsonArray().add(new Product("1", "fallback product", "fallback desc", 1000000).toJson())).setHandler(event -> {
+            rc.response()
                     .putHeader("Content-type", "application/json")
-                    .end(ar.result().encodePrettily()));
+                    .end(event.result().encodePrettily());
 
+
+        });
     }
 
 
