@@ -13,7 +13,7 @@
     <maven.test.skip>true</maven.test.skip>
     <vertx-maven-plugin.version>1.0.7</vertx-maven-plugin.version>
     <vertx.verticle>com.redhat.coolstore.catalog.verticle.MainVerticle</vertx.verticle>
-    <fabric8.maven.plugin.version>3.5.25</fabric8.maven.plugin.version>
+    <fabric8.maven.plugin.version>3.5.28</fabric8.maven.plugin.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -135,7 +135,7 @@
       <plugin>
         <groupId>io.fabric8</groupId>
         <artifactId>fabric8-maven-plugin</artifactId>
-        <version>3.5.19</version>
+        <version>${fabric8.maven.plugin.version}</version>
         <executions>
           <execution>
             <id>fmp</id>
