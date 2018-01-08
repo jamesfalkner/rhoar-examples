@@ -46,7 +46,7 @@ app.use('/api/inventory/:itemId', (request, response) => {
   return response.send({
     itemId: itemId,
     location: 'Idaho',
-    quentity: Math.floor(Math.random() * 1000),
+    quantity: 337,
     link: 'http://google.com/idaho'
   });
 });
@@ -55,15 +55,15 @@ app.use('/api/killme', (request, response) => {
   return response.send('Stopping HTTP server, Bye bye world !');
 });
 
-// const probe = require('kube-probe');
+const probe = require('kube-probe');
 
-// const options = {
-//   livenessCallback: (request, response) => {
-//     console.log('livenessCallback called, we are " ' + (isOnline ? 'ONLINE' : 'OFFLINE'));
-//     return isOnline ? response.send('OK') : response.sendStatus(500);
-//   }
-// };
-//
-// probe(app, options);
+const options = {
+  livenessCallback: (request, response) => {
+    console.log('livenessCallback called, we are " ' + (isOnline ? 'ONLINE' : 'OFFLINE'));
+    return isOnline ? response.send('OK') : response.sendStatus(500);
+  }
+};
+
+probe(app, options);
 
 module.exports = app;
