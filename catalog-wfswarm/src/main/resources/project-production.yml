@@ -3,7 +3,7 @@ swarm:
   datasources:
     data-sources:
       ProductDS:
-        driver-name: postgresql
-        connection-url: jdbc:postgresql://catalog-database:5432/catalog
-        user-name: swarm
-        password: password
+        driver-name: h2
+        connection-url: jdbc:h2:mem:catalog;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+        user-name: sa
+        password: sa
