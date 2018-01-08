@@ -95,7 +95,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.6</version>
+                <version>3.2.0</version>
                 <configuration>
                     <webResources>
                         <resource>
@@ -104,12 +104,36 @@
                             <targetPath>WEB-INF</targetPath>
                         </resource>
                     </webResources>
+                    <warName>ROOT</warName>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <version>1.1.0.Final</version>
+                <configuration>
+                    <resources>
+                        <resource>
+                            <addIfAbsent>true</addIfAbsent>
+                            <address>subsystem=datasources,data-source=CoolstoreDS</address>
+                            <properties>
+                                <jndi-name>java:/jboss/datasources/CoolstoreDS</jndi-name>
+                                <enabled>true</enabled>
+                                <connection-url>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1</connection-url>
+                                <driver-class>org.h2.Driver</driver-class>
+                                <driver-name>h2</driver-name>
+                                <user-name>sa</user-name>
+                                <password>sa</password>
+                            </properties>
+                        </resource>
+                    </resources>
+                    <server-args>
+                        <server-arg>-Djboss.https.port=9443</server-arg>
+                        <server-arg>-b=0.0.0.0</server-arg>
+                    </server-args>
+                    <javaOpts>-Djava.net.preferIPv4Stack=true</javaOpts>
+                    <filename>ROOT.war</filename>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>io.fabric8</groupId>
