@@ -31,7 +31,7 @@
     <java.version>1.8</java.version>
     <project.encoding>UTF-8</project.encoding>
 
-    <version.wildfly.swarm>2017.8.1</version.wildfly.swarm>
+    <version.wildfly-swarm>2017.11.0</version.wildfly-swarm>
 
     <version.h2>1.4.187</version.h2>
     <failOnMissingWebXml>false</failOnMissingWebXml>
@@ -49,7 +49,7 @@
       <dependency>
         <groupId>org.wildfly.swarm</groupId>
         <artifactId>bom-all</artifactId>
-        <version>${version.wildfly.swarm}</version>
+        <version>${version.wildfly-swarm}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -116,7 +116,7 @@
       <plugin>
         <groupId>org.wildfly.swarm</groupId>
         <artifactId>wildfly-swarm-plugin</artifactId>
-        <version>${version.wildfly.swarm}</version>
+        <version>${version.wildfly-swarm}</version>
         <executions>
           <execution>
             <goals>
@@ -124,6 +124,9 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <fractionDetectMode>force</fractionDetectMode>
+        </configuration>
       </plugin>
 
       <!-- Add additional plugins here -->
