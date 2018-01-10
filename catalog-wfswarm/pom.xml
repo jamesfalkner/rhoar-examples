@@ -32,6 +32,7 @@
     <project.encoding>UTF-8</project.encoding>
 
     <version.wildfly-swarm>2017.11.0</version.wildfly-swarm>
+    <fabric8.namespace>service</fabric8.namespace>
 
     <version.h2>1.4.187</version.h2>
     <failOnMissingWebXml>false</failOnMissingWebXml>
