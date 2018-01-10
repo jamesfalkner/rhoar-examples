@@ -28,10 +28,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-let isOnline = true;
+const isOnline = true;
 
 app.use('/api/inventory/:itemId', (request, response) => {
-  var itemId = request.params.itemId;
+  const itemId = request.params.itemId;
 
   return response.send({
     itemId: itemId,

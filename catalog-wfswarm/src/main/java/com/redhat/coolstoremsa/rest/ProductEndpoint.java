@@ -1,11 +1,21 @@
 package com.redhat.coolstoremsa.rest;
 
+import com.redhat.coolstoremsa.model.Inventory;
+import com.redhat.coolstoremsa.model.Product;
+import com.redhat.coolstoremsa.service.ProductService;
+
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.client.AsyncInvoker;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Logger;
+
 //import javax.ws.rs.client.AsyncInvoker;
 //import javax.ws.rs.client.ClientBuilder;
 //import javax.ws.rs.core.GenericType;
@@ -14,11 +24,6 @@ import javax.ws.rs.core.MediaType;
 //import com.netflix.hystrix.strategy.eventnotifier.HystrixEventNotifier;
 //import com.redhat.coolstoremsa.model.Inventory;
 //import java.util.concurrent.ExecutionException;
-import com.redhat.coolstoremsa.model.Product;
-import com.redhat.coolstoremsa.service.ProductService;
-
-import java.util.List;
-import java.util.logging.Logger;
 
 @Path("/products")
 public class ProductEndpoint {
@@ -44,16 +49,24 @@ public class ProductEndpoint {
 
         List<Product> products = productService.getProducts();
 
+        products.parallelStream().forEach(p -> p.setQuantity(dumbGetQuantity(p.getItemId())));
+
 //        products.parallelStream()
 //                .forEach(p -> p.setQuantity(new GetInventoryCommand(p.getItemId()).execute().getQuantity()));
 
         return products;
     }
 
-    @GET
-    @Path("/{itemId}")
-    public Product getCart(@PathParam("itemId") String itemId) {
-        return productService.getProductByItemId(itemId);
+    private int dumbGetQuantity(String itemId) {
+        String url = "http://inventory:8080/api/inventory/" + itemId;
+        try {
+            AsyncInvoker request = ClientBuilder.newClient().target(url).request().async();
+            return request.get(new GenericType<Inventory>() {
+            }).get().getQuantity();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(" Oops, Something went wrong ! ");
+        }
+
     }
 
 //    class GetInventoryCommand extends HystrixCommand<Inventory> {
@@ -61,7 +74,7 @@ public class ProductEndpoint {
 //        private String itemId;
 //
 //        public GetInventoryCommand(String itemId) {
-//            super(HystrixCommandGroupKey.Factory.asKey("InventoryGroup"), 500);
+//            super(HystrixCommandGroupKey.Factory.asKey("InventoryGroup"));
 //            this.itemId = itemId;
 //        }
 //
