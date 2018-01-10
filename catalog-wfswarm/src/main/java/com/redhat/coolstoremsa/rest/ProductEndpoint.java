@@ -6,15 +6,14 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+//import javax.ws.rs.client.AsyncInvoker;
 //import javax.ws.rs.client.ClientBuilder;
-//import javax.ws.rs.client.Invocation.Builder;
 //import javax.ws.rs.core.GenericType;
-//import javax.ws.rs.core.MediaType;
-//
-//import com.netflix.hystrix.HystrixCommand;
-//import com.netflix.hystrix.HystrixCommandGroupKey;
-//import com.netflix.hystrix.HystrixCommandProperties;
+//import com.netflix.hystrix.*;
+//import com.netflix.hystrix.strategy.HystrixPlugins;
+//import com.netflix.hystrix.strategy.eventnotifier.HystrixEventNotifier;
 //import com.redhat.coolstoremsa.model.Inventory;
+//import java.util.concurrent.ExecutionException;
 import com.redhat.coolstoremsa.model.Product;
 import com.redhat.coolstoremsa.service.ProductService;
 
@@ -24,6 +23,15 @@ import java.util.logging.Logger;
 @Path("/products")
 public class ProductEndpoint {
 
+//    static {
+//        HystrixPlugins.getInstance().registerEventNotifier(new HystrixEventNotifier() {
+//            @Override
+//            public void markEvent(HystrixEventType eventType, HystrixCommandKey key) {
+//                LOG.info("CIRCUIT BREAKER: " + eventType.name());
+//            }
+//        });
+//
+//    }
     private static Logger LOG = Logger.getLogger(ProductEndpoint.class.getName());
 
     @Inject
@@ -60,12 +68,11 @@ public class ProductEndpoint {
 //        @Override
 //        protected Inventory run() {
 //            String url = "http://inventory:8080/api/inventory/" + itemId;
-//            Builder request = ClientBuilder.newClient().target(url).request();
 //            try {
-//                return request.get(new GenericType<Inventory>(){});
-//            } catch (Exception e) {
-//                LOG.severe("Failed to call Inventory service at " + url + ": " + e.getMessage());
-//                throw e;
+//                AsyncInvoker request = ClientBuilder.newClient().target(url).request().async();
+//                return request.get(new GenericType<Inventory>(){}).get();
+//            } catch (InterruptedException | ExecutionException e) {
+//                throw new RuntimeException(" Oops, Something went wrong ! ") ;
 //            }
 //        }
 //

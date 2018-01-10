@@ -30,16 +30,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 let isOnline = true;
 
-//
-app.use('/api/greeting', (request, response) => {
-  if (!isOnline) {
-    return response.sendStatus(400);
-  }
-
-  const name = request.query ? request.query.name : undefined;
-  return response.send({content: `Hello, ${name || 'World'}`});
-});
-
 app.use('/api/inventory/:itemId', (request, response) => {
   var itemId = request.params.itemId;
 
@@ -49,10 +39,6 @@ app.use('/api/inventory/:itemId', (request, response) => {
     quantity: 337,
     link: 'http://google.com/idaho'
   });
-});
-app.use('/api/killme', (request, response) => {
-  isOnline = false;
-  return response.send('Stopping HTTP server, Bye bye world !');
 });
 
 const probe = require('kube-probe');
