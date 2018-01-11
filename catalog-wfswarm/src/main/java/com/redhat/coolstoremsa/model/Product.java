@@ -17,6 +17,8 @@ public class Product implements Serializable {
 
 	private double price;
 
+	private int quantity;
+
 	public Product() {
 	}
 
@@ -54,6 +56,14 @@ public class Product implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Product [itemId=" + itemId + ", name=" + name + ", price=" + price + "]";
+		return "Product [itemId=" + itemId + ", name=" + name + ", price=" + price + ", quantity=" + quantity + "]";
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 }
