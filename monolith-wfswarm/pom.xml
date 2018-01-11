@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.redhat.coolstore</groupId>
     <artifactId>monolith</artifactId>
@@ -77,8 +76,9 @@
         <m2e.jaxrs.activation>false</m2e.jaxrs.activation>
         <m2e.jpa.activation>false</m2e.jpa.activation>
         <m2e.jsf.activation>false</m2e.jsf.activation>
+        <fabric8.namespace>coolstore</fabric8.namespace>
         <maven.test.skip>true</maven.test.skip>
-        <version.wildfly-swarm>2017.8.1</version.wildfly-swarm>
+        <version.wildfly-swarm>2017.11.0</version.wildfly-swarm>
 
     </properties>
     <build>
@@ -96,7 +96,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.6</version>
+                <version>3.2.0</version>
                 <configuration>
                     <webResources>
                         <resource>
@@ -111,37 +111,44 @@
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <version>1.1.0.Final</version>
-            </plugin>
+                <configuration>
+                    <resources>
+                        <resource>
+                            <addIfAbsent>true</addIfAbsent>
+                            <address>subsystem=datasources,data-source=CoolstoreDS</address>
+                            <properties>
+                                <jndi-name>java:/jboss/datasources/CoolstoreDS</jndi-name>
+                                <enabled>true</enabled>
+                                <connection-url>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1</connection-url>
+                                <driver-class>org.h2.Driver</driver-class>
+                                <driver-name>h2</driver-name>
+                                <user-name>sa</user-name>
+                                <password>sa</password>
+                            </properties>
+                        </resource>
+                    </resources>
+                    <server-args>
+                        <server-arg>-Djboss.https.port=9443</server-arg>
+                        <server-arg>-b=0.0.0.0</server-arg>
+                    </server-args>
+                    <javaOpts>-Djava.net.preferIPv4Stack=true</javaOpts>
+                </configuration>
+      </plugin>
             <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>fabric8-maven-plugin</artifactId>
-                <version>3.5.28</version>
-                <executions>
-                    <execution>
-                        <id>fmp</id>
-                        <goals>
-                            <goal>resource</goal>
-                            <goal>helm</goal>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.wildfly.swarm</groupId>
-                <artifactId>wildfly-swarm-plugin</artifactId>
-                <version>${version.wildfly-swarm}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>package</goal>
-                        </goals>
-                    </execution>
-                </executions>
+        <groupId>org.wildfly.swarm</groupId>
+        <artifactId>wildfly-swarm-plugin</artifactId>
+        <version>${version.wildfly-swarm}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>package</goal>
+            </goals>
+          </execution>
+        </executions>
                 <configuration>
                     <fractionDetectMode>force</fractionDetectMode>
                 </configuration>
-            </plugin>
+      </plugin>
         </plugins>
     </build>
     <profiles>
@@ -151,7 +158,7 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-war-plugin</artifactId>
-                        <version>2.6</version>
+                        <version>3.2.0</version>
                         <configuration>
                             <webResources>
                                 <resource>
@@ -163,6 +170,21 @@
                             <outputDirectory>deployments</outputDirectory>
                             <warName>ROOT</warName>
                         </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>fabric8-maven-plugin</artifactId>
+                        <version>3.5.33</version>
+                        <executions>
+                            <execution>
+                                <id>fmp</id>
+                                <goals>
+                                    <goal>resource</goal>
+                                    <goal>helm</goal>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
@@ -180,12 +202,12 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>org.wildfly.swarm</groupId>
-                <artifactId>bom-all</artifactId>
-                <version>${version.wildfly-swarm}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+        <groupId>org.wildfly.swarm</groupId>
+        <artifactId>bom-all</artifactId>
+        <version>${version.wildfly-swarm}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
         </dependencies>
     </dependencyManagement>
     <dependencies>
@@ -203,9 +225,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>monitor</artifactId>
-        </dependency>
+      <groupId>org.wildfly.swarm</groupId>
+      <artifactId>monitor</artifactId>
+    </dependency>
 
     </dependencies>
 </project>

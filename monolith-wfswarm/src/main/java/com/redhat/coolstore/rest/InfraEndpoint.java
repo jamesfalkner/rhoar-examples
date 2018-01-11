@@ -12,7 +12,9 @@ public class InfraEndpoint {
     @GET
     @Path("/health")
     @Health
-    public HealthStatus health() {
-        return HealthStatus.named("foo").up();
+    public HealthStatus check() {
+
+        return HealthStatus.named("main").up();
     }
+
 }
