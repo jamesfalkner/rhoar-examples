@@ -39,7 +39,8 @@
 
     <!-- Add additional properties here -->
     <fabric8.version>2.3.4</fabric8.version>
-    <fabric8.maven.plugin.version>3.5.33</fabric8.maven.plugin.version>
+    <fabric8.maven.plugin.version>3.5.34</fabric8.maven.plugin.version>
+    <fabric8.generator.from>registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift</fabric8.generator.from>
 
     <version.postgresql>9.4.1207</version.postgresql>
 

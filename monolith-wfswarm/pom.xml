@@ -78,7 +78,7 @@
         <m2e.jsf.activation>false</m2e.jsf.activation>
         <fabric8.namespace>coolstore</fabric8.namespace>
         <maven.test.skip>true</maven.test.skip>
-
+        <fabric8.generator.from>registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift</fabric8.generator.from>
     </properties>
     <build>
         <finalName>${project.artifactId}</finalName>
@@ -158,7 +158,7 @@
                     <plugin>
                         <groupId>io.fabric8</groupId>
                         <artifactId>fabric8-maven-plugin</artifactId>
-                        <version>3.5.33</version>
+                        <version>3.5.34</version>
                         <executions>
                             <execution>
                                 <id>fmp</id>
